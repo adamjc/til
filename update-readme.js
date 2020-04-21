@@ -1,27 +1,51 @@
 const fs = require('fs')
 const path = require('path')
 
-// TODO, join the paths to give relative to initial dir
 async function getMarkdownFiles (dirPath = '.') {
   const dir = await fs.promises.opendir(dirPath)
   let fileEnts = []
 
   for await (const dirent of dir) {
     if (dirent.isDirectory() && !dirent.name.startsWith('.')) {
-      getMarkdownFiles(dirent.name)
-    } else if (dirent.isFile() && path.extname(dirent.name) === '.md') {
-      fileEnts.push(dirent.name)
+      const filePaths = await getMarkdownFiles(path.join(dir.path, dirent.name))
+      fileEnts.push(filePaths)
+    } else if (dirent.isFile() && path.extname(dirent.name) === '.md' && dirent.name !== 'README.md') {
+      fileEnts.push(path.join(dir.path, dirent.name))
     }
   }
 
   return fileEnts
 }
 
-async function main () {
-  const markdownFiles = await getMarkdownFiles('.')
+function pathToH (path) {
+  const paths = path.split('/')
+  const headingLevel = '#'.repeat(paths.length)
+  const heading = paths[paths.length - 1]
 
-  // TODO: update the README with links to files
-  console.log(`markdownFiles: ${JSON.stringify(markdownFiles, null, 2)}`)
+  return `${headingLevel} ${heading}`
+}
+
+async function getTitle (path) {
+  const title = (await fs.promises.readFile(path)).toString().split('\n')[0]
+  return title.slice(2, title.length)
+}
+
+async function main () {
+  const markdownFiles = (await getMarkdownFiles('.')).flat(Infinity)
+
+  let readme = []
+  for (const dirent of markdownFiles) {
+    const heading = pathToH(path.parse(dirent).dir)
+    if (!readme.includes(heading)) {
+      readme.push(heading)
+    }
+
+    const title = await getTitle(dirent)
+    const link = `[${title}](${dirent})`
+    readme.push(link)
+  }
+
+  await fs.promises.writeFile('README.md', readme.join('\n\n'))
 }
 
 main()
