@@ -17,6 +17,7 @@ async function getMarkdownFiles (dirPath = '.') {
   return fileEnts
 }
 
+// path = some/slash/delimited/path
 function pathToH (path) {
   const paths = path.split('/')
   const headingLevel = '#'.repeat(paths.length)
@@ -30,7 +31,7 @@ async function getTitle (path) {
   return title.slice(2, title.length)
 }
 
-async function main () {
+async function makeReadme () {
   const markdownFiles = (await getMarkdownFiles('.')).flat(Infinity)
 
   let readme = []
@@ -48,4 +49,4 @@ async function main () {
   await fs.promises.writeFile('README.md', readme.join('\n\n'))
 }
 
-main()
+makeReadme()
