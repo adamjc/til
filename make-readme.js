@@ -18,8 +18,8 @@ async function getMarkdownFiles (dirPath = '.') {
 }
 
 // path = some/slash/delimited/path
-function pathToHeadings (path) {
-  return path.split('/').map((heading, i) => `${'#'.repeat(i + 1)} ${heading}`)
+function genSubHeadings (path) {
+  return path.split('/').map((heading, i) => `#${'#'.repeat(i + 1)} ${heading}`)
 }
 
 async function getTitle (path) {
@@ -30,9 +30,9 @@ async function getTitle (path) {
 async function makeReadme () {
   const markdownFiles = (await getMarkdownFiles('.')).flat(Infinity)
 
-  let readme = []
+  let readme = ['# TIL']
   for (const dirent of markdownFiles) {
-    const headings = pathToHeadings(path.parse(dirent).dir)
+    const headings = genSubHeadings(path.parse(dirent).dir)
 
     for (const heading of headings) {
       if (!readme.includes(heading)) {
