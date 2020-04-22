@@ -1,13 +1,9 @@
-# example
+# code
 
-[This is an example .md file](example/example.md)
+## javascript
 
-[Electric Boogaloo](example/example-2.md)
+[Repeat a string](code/javascript/repeat.md)
 
-## nested
+# git
 
-[Title](example/nested/lol.md)
-
-# another-example
-
-[Well well well](another-example/testing.md)
+[Unstage commits](git/unstage-commit.md)
