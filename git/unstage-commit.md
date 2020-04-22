@@ -1,6 +1,6 @@
 # Unstage commits
 
-`git reset --soft $sha // where $sha is a commit.`
+`git reset --soft <commit-sha>`
 
 To reset the last commit, we can use the `HEAD` alias:
 
