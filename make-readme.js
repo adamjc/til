@@ -18,12 +18,8 @@ async function getMarkdownFiles (dirPath = '.') {
 }
 
 // path = some/slash/delimited/path
-function pathToH (path) {
-  const paths = path.split('/')
-  const headingLevel = '#'.repeat(paths.length)
-  const heading = paths[paths.length - 1]
-
-  return `${headingLevel} ${heading}`
+function pathToHeadings (path) {
+  return path.split('/').map((heading, i) => `${'#'.repeat(i + 1)} ${heading}`)
 }
 
 async function getTitle (path) {
@@ -36,9 +32,12 @@ async function makeReadme () {
 
   let readme = []
   for (const dirent of markdownFiles) {
-    const heading = pathToH(path.parse(dirent).dir)
-    if (!readme.includes(heading)) {
-      readme.push(heading)
+    const headings = pathToHeadings(path.parse(dirent).dir)
+
+    for (const heading of headings) {
+      if (!readme.includes(heading)) {
+        readme.push(heading)
+      }
     }
 
     const title = await getTitle(dirent)
