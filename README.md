@@ -1,8 +1,8 @@
 # example
 
-[Electric Boogaloo](example/example-2.md)
-
 [This is an example .md file](example/example.md)
+
+[Electric Boogaloo](example/example-2.md)
 
 ## nested
 
