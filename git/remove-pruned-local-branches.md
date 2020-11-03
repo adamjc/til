@@ -10,4 +10,4 @@ $ git branch -vv | grep ': gone]' | awk '{print $1}' | xargs echo git branch -D 
 
 `awk '{print $1}'` prints the first 'field' (whitespaces are separators, so this prints just the name of the branch)
 
-`xargs git branch -D` will pass in the output of anything before it as an argument, so here we are passing in a list of branches of `git branch -D` which will do the rest for us.
+`xargs git branch -D` will pass in the output of anything before it as an argument, so here we pass in a list of branches of `git branch -D` which will do the rest for us.
