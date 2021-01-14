@@ -6,6 +6,7 @@ name: Test Push Tags
 on:
   push:
     tags: "*"
+    branches: "master"
 
 jobs:
   build:
