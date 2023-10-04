@@ -31,3 +31,7 @@
 [Debugging](code/javascript/ramda/useful-logging.md)
 
 [Get the name of a function (as a string)](code/javascript/function-name.md)
+
+## linux
+
+[Make a symlink](linux/make-a-symlink.md)
