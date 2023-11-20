@@ -28,11 +28,11 @@ async function getTitle (path) {
 }
 
 async function makeReadme () {
-  const markdownFiles = (await getMarkdownFiles('.')).flat(Infinity)
-
+  const markdownFiles = (await getMarkdownFiles('.')).flat(Infinity).sort()
+  
   let readme = ['# TIL']
   for (const dirent of markdownFiles) {
-    const headings = genSubHeadings(path.parse(dirent).dir)
+    const headings = genSubHeadings(path.parse(dirent).dir).sort()    
 
     for (const heading of headings) {
       if (!readme.includes(heading)) {
